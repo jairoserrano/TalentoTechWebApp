@@ -12,12 +12,12 @@ def index():
 
 @app.route('/galletas')
 def galletas():
-    return "Aquí mis galletas."
+    return "Aquí mis galletas"
 
 
 @app.route('/contacto')
 def contacto():
-    return "Aquí mi contacto."
+    return "Aquí mi contacto"
 
 
 if __name__ == '__main__':
