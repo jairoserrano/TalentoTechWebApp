@@ -1,0 +1,74 @@
+/* Definir variables de colores personalizados */
+:root {
+    --earth-yellow: #E1AB60;
+    --pearl: #DADAC0;
+    --coyote: #80725C;
+    --burnt-orange: #AE5F2D;
+    --russet: #804B32;
+    --khaki: #BDB392;
+}
+
+.bg-dark {
+    background-color: var(--coyote) !important;
+}
+
+.bg-secondary {
+    background-color: var(--khaki) !important;
+}
+
+.btn-primary {
+    background-color: var(--earth-yellow) !important;
+    border-color: var(--pearl) !important;
+}
+
+
+/* Aplicar colores de fondo personalizados */
+
+
+.bg-pearl {
+    background-color: var(--pearl) !important;
+}
+
+.bg-burnt-orange {
+    background-color: var(--burnt-orange) !important;
+}
+
+.bg-russet {
+    background-color: var(--russet) !important;
+}
+
+
+
+/* Aplicar colores de texto personalizados */
+.text-earth-yellow {
+    color: var(--earth-yellow) !important;
+}
+
+.text-pearl {
+    color: var(--pearl) !important;
+}
+
+.text-coyote {
+    color: var(--coyote) !important;
+}
+
+.text-burnt-orange {
+    color: var(--burnt-orange) !important;
+}
+
+.text-russet {
+    color: var(--russet) !important;
+}
+
+.text-khaki {
+    color: var(--khaki) !important;
+}
+
+/* Aplicar gradientes personalizados */
+.bg-custom-gradient {
+    background: linear-gradient(45deg, var(--earth-yellow), var(--burnt-orange), var(--russet)) !important;
+}
+
+.bg-gradient-reverse {
+    background: linear-gradient(135deg, var(--khaki), var(--pearl), var(--coyote)) !important;
+}
