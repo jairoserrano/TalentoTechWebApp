@@ -14,6 +14,9 @@ def index():
 def galletas():
     return render_template("galletas.html")
 
+@app.route("/galletas/<string:galleta>")
+def galleta(galleta):
+    return render_template("galleta.html", tipo=galleta)
 
 @app.route("/contacto")
 def contacto():

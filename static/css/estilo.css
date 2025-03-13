@@ -4,7 +4,7 @@
     --pearl: #DADAC0;
     --coyote: #80725C;
     --burnt-orange: #AE5F2D;
-    --russet: #804B32;
+    --russet: #804b32;
     --khaki: #BDB392;
 }
 
@@ -21,6 +21,17 @@
     border-color: var(--pearl) !important;
 }
 
+.link-primary, .link-primary:hover, .fs-1 {
+    color: var(--burnt-orange) !important;
+}
+
+.carousel-caption {
+    background-color: rgb(128, 75, 50, 0.4) !important;
+}
+
+.carousel-caption h5, .carousel-caption p {
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
 
 /* Aplicar colores de fondo personalizados */
 

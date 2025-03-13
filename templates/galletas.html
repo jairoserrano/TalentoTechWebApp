@@ -1,36 +1,116 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mi Primera App Web</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}" />
-  </head>
-  <body>
-    <header class="bg-dark text-white text-center py-3">
-      <h1>Bienvenido a Mi Primera App Web</h1>
-    </header>
-    <nav class="bg-secondary text-white text-center py-2">
-      <a href="/" class="text-white mx-2">Inicio</a>
-      <a href="/galletas" class="text-white mx-2">Mis Galletas</a>
-      <a href="/contacto" class="text-white mx-2">Contactenos</a>
-    </nav>
-    <main>
-      GALLETAS
-    </main>
-    <footer class="bg-dark text-white text-center py-3">
-      <p>&copy; 2025 Mi Primera App Web. Todos los derechos reservados.</p>
-    </footer>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+
+      <h3>Nuestro surtido de galletas.</h3>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t01.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><a class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover" href="/galletas/t01">Chips de Chocolate</a></h5>
+              <p class="card-text">Galleta dorada con chispas de chocolate derretidas.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t02.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Con uvitas</h5>
+              <p class="card-text">Galleta de avena con pasas, textura crujiente y suave.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t03.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Chispitas Arcoiris</h5>
+              <p class="card-text">Galleta de azúcar con chispas de colores y bordes dorados.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t04.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Artesanal</h5>
+              <p class="card-text">Galleta de mantequilla de maní con patrón de tenedor.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t05.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Chocolate</h5>
+              <p class="card-text">Galleta de chocolate con trozos de chocolate blanco.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t06.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Girasol</h5>
+              <p class="card-text">Galleta de mantequilla con textura delicada y crujiente</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t07.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Apanada Azucarada</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t08.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Macarrones</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t09.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">De la fortuna</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t10.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Hamburguesita</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t11.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Corazón Cupido</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ url_for('static', filename='img/galleta_t12.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Jengibre</h5>
+              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}
