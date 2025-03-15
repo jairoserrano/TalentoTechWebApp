@@ -3,7 +3,11 @@
 {% block content %}
 <h1>Contactenos</h1>
 
-<img class="img-fluid" src="{{ url_for('static', filename='img/contactenos.webp') }}" alt="Una imagen de una panaderia con galletas" />
+{% if mensaje %}
+<span class="badge text-bg-primary fs-3">{{ mensaje }}</span>
+{% endif %}
+
+<img class="img-fluid py-3" src="{{ url_for('static', filename='img/contactenos.webp') }}" alt="Una imagen de una panaderia con galletas" />
 
 <form method="post" action="/contacto" class="row g-3 needs-validation py-3" novalidate>
       <div class="col-md-4">
@@ -15,19 +19,18 @@
       </div>
       <div class="col-md-4">
             <label for="validationCustom02" class="form-label">Apellidos</label>
-            <input name="apellido" type="text" class="form-control" id="validationCustom02" required>
+            <input name="apellidos" type="text" class="form-control" id="validationCustom02" required>
             <div class="invalid-feedback">
                   Debes proporcionar un apellido.
             </div>
       </div>
       <div class="col-md-4">
-            <label for="validationCustomUsername" class="form-label">Usuario</label>
+            <label for="validationCustomUsername" class="form-label">Correo electrónico</label>
             <div class="input-group has-validation">
-                  <span class="input-group-text" id="inputGroupPrepend">@</span>
-                  <input name="usuario" type="text" class="form-control" id="validationCustomUsername"
+                  <input name="email" type="email" class="form-control" id="validationCustomUsername"
                         aria-describedby="inputGroupPrepend" required>
                   <div class="invalid-feedback">
-                        Por favor selecciona un nombre de usuario.
+                        Por favor escribe un correo electrónico válido.
                   </div>
             </div>
       </div>
@@ -39,10 +42,10 @@
             </div>
       </div>
       <div class="col-md-6">
-            <label for="validationCustom05" class="form-label">Código postal</label>
-            <input name="codigo" type="number" class="form-control" id="validationCustom05" required>
+            <label for="validationCustom05" class="form-label">Teléfono</label>
+            <input name="telefono" type="number" class="form-control" id="validationCustom05" required>
             <div class="invalid-feedback">
-                  Falta el código de área.
+                  Falta el número de teléfono.
             </div>
       </div>
       <div class="col-12">
