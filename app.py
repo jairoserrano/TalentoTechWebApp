@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template, request, redirect, url_for
-
+import json
 
 app = Flask(__name__)
 
@@ -36,8 +36,35 @@ def guardar_contacto():
     with open("database/contactos.txt", "a") as file:
         file.write(f"{nombre},{apellidos},{email},{telefono},{ciudad}\n")
 
+    with open(f"database/{telefono}.json", "w") as file:
+        file.write(json.dumps(request.form.to_dict()))
+
     # Redireccionar a la página de contacto.
     return redirect(url_for("contacto", mensaje="Contacto guardado."))
+
+"""
+Ruta para mostrar los contactos guardados.
+"""
+@app.route("/admin/contactos")
+def admin_contactos():
+    contactos = []
+    # lectura del archivo, teniendo en cuenta la codificación utf-8.
+    with open("database/contactos.txt", "r", encoding="utf-8") as file:
+        for linea in file:
+            # separar los datos por comas.
+            datos = linea.strip().split(",")
+            # Crear un diccionario con los datos.
+            contacto = {
+                "nombre": datos[0],
+                "apellidos": datos[1],
+                "email": datos[2],
+                "telefono": datos[3],
+                "ciudad": datos[4]
+            }
+            # Agregar el contacto a la lista de contactos.
+            contactos.append(contacto)
+
+    return render_template("admin/contactos.html", contactos=contactos)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,4 +1,3 @@
-Nombre,Apellido,Correo,Teléfono,Ciudad
 Sofía,Ruiz,sofía.ruiz@gmail.com,3062852055,Medellín
 Pedro,Rodríguez,pedro.rodríguez@yahoo.com,3030542678,Cúcuta
 Pedro,Ruiz,pedro.ruiz@utb.edu.co,3066583181,Cartagena
@@ -99,3 +98,4 @@ Juan,García,juan.garcía@hotmail.com,3105110193,Pereira
 Javier,Gómez,javier.gómez@yahoo.com,3056174236,Cúcuta
 María,López,maría.lópez@hotmail.com,3036000011,Pereira
 Carlos,Gómez,carlos.gómez@outlook.com,3114335367,Medellín
+Juan,Perez,juan@perez.com,23453245634,Cartago
