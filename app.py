@@ -1,9 +1,23 @@
 from flask import Flask
 from flask import render_template, request, redirect, url_for
-import json
+import json, os
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "database/database.db")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db = SQLAlchemy(app)
+
+# Nombre,Apellidos,Correo,Telefono,Ciudad
+class Contacto(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+    apellidos = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    telefono = db.Column(db.String(15), nullable=False)
+    ciudad = db.Column(db.String(100), nullable=False)
 
 @app.route("/")
 def index():
@@ -41,6 +55,14 @@ def guardar_contacto():
 
     # Redireccionar a la página de contacto.
     return redirect(url_for("contacto", mensaje="Contacto guardado."))
+
+
+@app.route("/setup")
+def setup():
+    with app.app_context():
+        db.create_all()
+    return "Base de datos creada correctamente."
+
 
 """
 Ruta para mostrar los contactos guardados.
