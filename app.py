@@ -53,6 +53,11 @@ def guardar_contacto():
     with open(f"database/{telefono}.json", "w") as file:
         file.write(json.dumps(request.form.to_dict()))
 
+    # Guardar en base de datos.
+    contacto = Contacto(nombre=nombre, apellidos=apellidos, email=email, telefono=telefono, ciudad=ciudad)
+    db.session.add(contacto)
+    db.session.commit()
+
     # Redireccionar a la página de contacto.
     return redirect(url_for("contacto", mensaje="Contacto guardado."))
 
