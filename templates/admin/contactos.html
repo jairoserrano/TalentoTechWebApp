@@ -18,6 +18,7 @@
                 <th>Correo</th>
                 <th>Teléfono</th>
                 <th>Ciudad</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +29,10 @@
                     <td>{{ contacto.email }}</td>
                     <td>{{ contacto.telefono }}</td>
                     <td>{{ contacto.ciudad }}</td>
+                    <td>
+                        <a href="{{ contacto.id }}" class="btn btn-primary">Editar {{ contacto.id }}</a>
+                        <a href="{{ contacto.id }}" class="btn btn-danger">Eliminar {{ contacto.id }}</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

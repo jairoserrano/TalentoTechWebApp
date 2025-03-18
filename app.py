@@ -50,6 +50,7 @@ def guardar_contacto():
     with open("database/contactos.txt", "a") as file:
         file.write(f"{nombre},{apellidos},{email},{telefono},{ciudad}\n")
 
+    # Guardar en archivo json.
     with open(f"database/{telefono}.json", "w") as file:
         file.write(json.dumps(request.form.to_dict()))
 
@@ -67,6 +68,12 @@ def setup():
     with app.app_context():
         db.create_all()
     return "Base de datos creada correctamente."
+
+
+@app.route("/database/contactos")
+def database_contactos():
+    contactos = Contacto.query.all()
+    return render_template("admin/contactos.html", contactos=contactos)
 
 
 """
