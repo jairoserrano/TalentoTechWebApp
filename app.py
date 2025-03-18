@@ -1,24 +1,12 @@
 from flask import Flask
+from config import Config
+from models import db, Contacto
 from flask import render_template, request, redirect, url_for
-import json, os
-from flask_sqlalchemy import SQLAlchemy
+import json
 
 app = Flask(__name__)
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "database/database.db")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
-
-# Nombre,Apellidos,Correo,Telefono,Ciudad
-class Contacto(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False)
-    apellidos = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
-    telefono = db.Column(db.String(15), nullable=False)
-    ciudad = db.Column(db.String(100), nullable=False)
-    borrado = db.Column(db.Boolean, default=False)
+app.config.from_object(Config)
+db.init_app(app)
 
 @app.route("/")
 def index():
