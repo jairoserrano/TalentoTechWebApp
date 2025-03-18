@@ -100,3 +100,5 @@ María,López,maría.lópez@hotmail.com,3036000011,Pereira
 Carlos,Gómez,carlos.gómez@outlook.com,3114335367,Medellín
 Juan,Perez,juan@perez.com,23453245634,CartagoJuan,Perez,jpere@utb.edu.co,300334533,Cartago
 Juana,De Arco,jdearco@utb.edu.co,3003074187,Cartagena
+Juan Camilo,Perez,juan@perez.com,342342342,Cartagena
+Juan Camilo,Perez Gonzalez,juan@perez.com,897263578238,Cartagena

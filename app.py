@@ -18,6 +18,7 @@ class Contacto(db.Model):
     email = db.Column(db.String(100), nullable=False)
     telefono = db.Column(db.String(15), nullable=False)
     ciudad = db.Column(db.String(100), nullable=False)
+    borrado = db.Column(db.Boolean, default=False)
 
 @app.route("/")
 def index():
@@ -72,9 +73,23 @@ def setup():
 
 @app.route("/database/contactos")
 def database_contactos():
-    contactos = Contacto.query.all()
+    #contactos = Contacto.query.all()
+    contactos = Contacto.query.filter_by(borrado=False).all()
     return render_template("admin/contactos.html", contactos=contactos)
 
+@app.route("/database/contactos/papelera")
+def database_contactos_papelera():
+    #contactos = Contacto.query.all()
+    contactos = Contacto.query.filter_by(borrado=True).all()
+    return render_template("admin/contactos.html", contactos=contactos, papelera=True)
+
+
+@app.route("/database/contactos/restaurar/<int:id>", methods=["GET"])
+def restaurar_contacto(id):
+    contacto = Contacto.query.get(id)
+    contacto.borrado = False
+    db.session.commit()
+    return redirect(url_for("database_contactos"))
 
 @app.route("/database/contactos/editar/<int:id>", methods=["GET","POST"])
 def editar_contacto(id):
@@ -91,6 +106,14 @@ def editar_contacto(id):
         contacto = Contacto.query.get(id)
         return render_template("admin/editar_contacto.html", contacto=contacto)
 
+@app.route("/database/contactos/eliminar/<int:id>", methods=["GET"])
+def eliminar_contacto(id):
+    contacto = Contacto.query.get(id)
+    contacto.borrado = True
+    db.session.commit()
+    #db.session.delete(contacto)
+    #db.session.commit()
+    return redirect(url_for("database_contactos"))
 
 """
 Ruta para mostrar los contactos guardados.

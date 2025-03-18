@@ -9,7 +9,11 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}" />
       </head>
 <body>
+    {% if papelera: %}
+    <h1>Papelera de reciclaje</h1>
+    {% else: %}
     <h1>Contactos</h1>
+    {% endif %}
     <table class="table table-striped">
         <thead>
             <tr>
@@ -30,8 +34,12 @@
                     <td>{{ contacto.telefono }}</td>
                     <td>{{ contacto.ciudad }}</td>
                     <td>
+                        {% if papelera: %}
+                        <a href="{{ url_for('restaurar_contacto', id=contacto.id) }}" class="btn btn-success">Restaurar</a>
+                        {% else: %}
                         <a href="{{ url_for('editar_contacto', id=contacto.id) }}" class="btn btn-primary">Editar</a>
-                        <a href="{{ contacto.id }}" class="btn btn-danger">Eliminar</a>
+                        <a href="{{ url_for('eliminar_contacto', id=contacto.id) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este contacto?')">Eliminar</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
