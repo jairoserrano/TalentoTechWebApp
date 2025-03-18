@@ -30,8 +30,8 @@
                     <td>{{ contacto.telefono }}</td>
                     <td>{{ contacto.ciudad }}</td>
                     <td>
-                        <a href="{{ contacto.id }}" class="btn btn-primary">Editar {{ contacto.id }}</a>
-                        <a href="{{ contacto.id }}" class="btn btn-danger">Eliminar {{ contacto.id }}</a>
+                        <a href="{{ url_for('editar_contacto', id=contacto.id) }}" class="btn btn-primary">Editar</a>
+                        <a href="{{ contacto.id }}" class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
             {% endfor %}

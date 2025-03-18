@@ -76,6 +76,22 @@ def database_contactos():
     return render_template("admin/contactos.html", contactos=contactos)
 
 
+@app.route("/database/contactos/editar/<int:id>", methods=["GET","POST"])
+def editar_contacto(id):
+    if request.method == "POST":
+        contacto = Contacto.query.get(id)
+        contacto.nombre = request.form.get("nombre")
+        contacto.apellidos = request.form.get("apellidos")
+        contacto.email = request.form.get("email")
+        contacto.telefono = request.form.get("telefono")
+        contacto.ciudad = request.form.get("ciudad")
+        db.session.commit()
+        return redirect(url_for("database_contactos"))
+    else:
+        contacto = Contacto.query.get(id)
+        return render_template("admin/editar_contacto.html", contacto=contacto)
+
+
 """
 Ruta para mostrar los contactos guardados.
 """
