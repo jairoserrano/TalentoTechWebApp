@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST" action="/perfil">
+    <div class="form-group">
+        <label for="password">Nueva Contraseña:</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+        <label for="password2">Repetir Nueva Contraseña:</label>
+        <input type="password" class="form-control" id="password2" name="password2" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+</form>
+{% endblock %}

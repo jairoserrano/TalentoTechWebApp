@@ -16,12 +16,15 @@
   </header>
   <nav class="navbar navbar-expand-lg bg-secondary py-2">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="/">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#80725C" class="bi bi-cookie" viewBox="0 0 16 16">
           <path d="M6 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m4.5.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-.5 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
           <path d="M8 0a7.96 7.96 0 0 0-4.075 1.114q-.245.102-.437.28A8 8 0 1 0 8 0m3.25 14.201a1.5 1.5 0 0 0-2.13.71A7 7 0 0 1 8 15a6.97 6.97 0 0 1-3.845-1.15 1.5 1.5 0 1 0-2.005-2.005A6.97 6.97 0 0 1 1 8c0-1.953.8-3.719 2.09-4.989a1.5 1.5 0 1 0 2.469-1.574A7 7 0 0 1 8 1c1.42 0 2.742.423 3.845 1.15a1.5 1.5 0 1 0 2.005 2.005A6.97 6.97 0 0 1 15 8c0 .596-.074 1.174-.214 1.727a1.5 1.5 0 1 0-1.025 2.25 7 7 0 0 1-2.51 2.224Z"/>
         </svg>
       </a>
+      {% if session['user'] %}
+        Hola {{ session['user'] }},
+      {% endif %}
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -36,6 +39,18 @@
           <li class="nav-item">
             <a class="nav-link" href="/contacto">Contacto</a>
           </li>
+          {% if session['user'] %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('perfil') }}">Perfil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Cerrar Sesión</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Ingreso a Usuarios</a>
+          </li>
+          {% endif %}
         </ul>
       </div>
     </div>

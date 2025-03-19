@@ -1,16 +1,41 @@
 from flask import Flask
+from flask import session
 from config import Config
-from models import db, Contacto
+from models import db, Contacto, Usuario
 from flask import render_template, request, redirect, url_for
 import json
 
 app = Flask(__name__)
+app.secret_key = "sdhjaskdhlasd%#&%tchajksfhjkS"
 app.config.from_object(Config)
 db.init_app(app)
 
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        user = request.form.get("user")
+        password = request.form.get("password")
+        usuario = Usuario.query.filter_by(user=user).first()
+        if usuario is not None and usuario.validar_password(password):
+            session["user"] = user
+            if usuario.admin:
+                session["admin"] = True
+                return redirect(url_for("database_contactos"))
+            session["admin"] = False
+            return redirect(url_for("index"))
+        else:
+            return "Usuario o contraseña incorrectos."
+    else:
+        return render_template("login/login.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
 
 @app.route("/galletas")
 def galletas():
@@ -57,6 +82,15 @@ def setup():
     with app.app_context():
         db.create_all()
     return "Base de datos creada correctamente."
+
+@app.route("/perfil", methods=["GET", "POST"])
+def perfil():
+    if request.method == "POST":
+        usuario = Usuario().query.filter_by(user=session["user"]).first()
+        usuario.set_password(request.form.get("password"))
+        db.session.commit()
+        return redirect(url_for("index"))
+    return render_template("perfil.html")
 
 
 @app.route("/database/contactos")
