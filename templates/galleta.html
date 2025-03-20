@@ -2,19 +2,16 @@
 
 {% block content %}
       <h3>Nuestro surtido de galletas.</h3>
-
       <div class="row g-0 text-center h-100">
         <div class="col-sm-5 col-md-5">
-          <img src="{{ url_for('static', filename='img/galleta_t01.webp') }}" class="card-img-top" alt="...">
+          <img src="{{ url_for('static', filename='img/galletas/' + galleta.get_nombre_archivo()) }}" class="card-img-top" alt="...">
         </div>
         <div class="col-sm-4 col-md-4">
-          <a class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover" href="/galletas/t01">
-            <p class="fs-3 fw-bold">Chips de Chocolate</p>
-          </a>
-          <p class="card-text">Galleta dorada con chispas de chocolate derretidas.</p>
+          <p class="fs-3 fw-bold">{{ galleta.nombre }}</p>
+          <p class="card-text">{{ galleta.descripcion }}</p>
         </div>
         <div class="col-sm-3 col-md-3">
-          <p class="fs-1"><span class="fs-4">$</span>5000</p>
+          <p class="fs-1"><span class="fs-4">$</span>{{ "{0:0.0f}".format(galleta.precio) }}</p>
           <a href="#" class="btn btn-primary">Comprar</a>
         </div>
       </div>

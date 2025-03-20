@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import session
 from config import Config
-from models import db, Contacto, Usuario
+from models import db, Contacto, Usuario, Galleta
 from flask import render_template, request, redirect, url_for
 import json
 
@@ -10,9 +10,11 @@ app.secret_key = "sdhjaskdhlasd%#&%tchajksfhjkS"
 app.config.from_object(Config)
 db.init_app(app)
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -20,6 +22,7 @@ def login():
         user = request.form.get("user")
         password = request.form.get("password")
         usuario = Usuario.query.filter_by(user=user).first()
+        #return usuario.get_password("admin")
         if usuario is not None and usuario.validar_password(password):
             session["user"] = user
             if usuario.admin:
@@ -32,23 +35,50 @@ def login():
     else:
         return render_template("login/login.html")
 
+
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("index"))
 
+
 @app.route("/galletas")
 def galletas():
-    return render_template("galletas.html")
+    galletas = Galleta.query.all()
+    return render_template("galletas.html", galletas=galletas)
 
-@app.route("/galletas/<string:galleta>")
-def galleta(galleta):
-    return render_template("galleta.html", tipo=galleta)
+@app.route("/galletas/nueva", methods=["GET", "POST"])
+def nueva_galleta():
+    if request.method == "POST":
+        nombre = request.form.get("nombre")
+        precio = request.form.get("precio")
+        descripcion = request.form.get("descripcion")
+
+        galleta = Galleta(
+            nombre=nombre,
+            precio=precio,
+            descripcion=descripcion,
+        )
+        db.session.add(galleta)
+        db.session.commit()
+        
+        request.files["imagen"].save(f"static/img/galletas/{galleta.id}.webp")
+        
+        return redirect(url_for("galletas"))
+    
+    return render_template("admin/nueva_galleta.html")
+
+@app.route("/galletas/<int:id>")
+def galleta(id):
+    galleta = Galleta.query.get(id)
+    return render_template("galleta.html", galleta=galleta)
+
 
 @app.route("/contacto", methods=["GET"])
 def contacto():
     mensaje = request.args.get("mensaje")
     return render_template("contacto.html", mensaje=mensaje)
+
 
 """
 Recepción de contactos para venta de productos.
@@ -69,7 +99,13 @@ def guardar_contacto():
         file.write(json.dumps(request.form.to_dict()))
 
     # Guardar en base de datos.
-    contacto = Contacto(nombre=nombre, apellidos=apellidos, email=email, telefono=telefono, ciudad=ciudad)
+    contacto = Contacto(
+        nombre=nombre,
+        apellidos=apellidos,
+        email=email,
+        telefono=telefono,
+        ciudad=ciudad,
+    )
     db.session.add(contacto)
     db.session.commit()
 
@@ -83,6 +119,7 @@ def setup():
         db.create_all()
     return "Base de datos creada correctamente."
 
+
 @app.route("/perfil", methods=["GET", "POST"])
 def perfil():
     if request.method == "POST":
@@ -95,13 +132,14 @@ def perfil():
 
 @app.route("/database/contactos")
 def database_contactos():
-    #contactos = Contacto.query.all()
+    # contactos = Contacto.query.all()
     contactos = Contacto.query.filter_by(borrado=False).all()
     return render_template("admin/contactos.html", contactos=contactos)
 
+
 @app.route("/database/contactos/papelera")
 def database_contactos_papelera():
-    #contactos = Contacto.query.all()
+    # contactos = Contacto.query.all()
     contactos = Contacto.query.filter_by(borrado=True).all()
     return render_template("admin/contactos.html", contactos=contactos, papelera=True)
 
@@ -113,7 +151,8 @@ def restaurar_contacto(id):
     db.session.commit()
     return redirect(url_for("database_contactos"))
 
-@app.route("/database/contactos/editar/<int:id>", methods=["GET","POST"])
+
+@app.route("/database/contactos/editar/<int:id>", methods=["GET", "POST"])
 def editar_contacto(id):
     if request.method == "POST":
         contacto = Contacto.query.get(id)
@@ -128,14 +167,16 @@ def editar_contacto(id):
         contacto = Contacto.query.get(id)
         return render_template("admin/editar_contacto.html", contacto=contacto)
 
+
 @app.route("/database/contactos/eliminar/<int:id>", methods=["GET"])
 def eliminar_contacto(id):
     contacto = Contacto.query.get(id)
     contacto.borrado = True
     db.session.commit()
-    #db.session.delete(contacto)
-    #db.session.commit()
+    # db.session.delete(contacto)
+    # db.session.commit()
     return redirect(url_for("database_contactos"))
+
 
 """
 Ruta para mostrar los contactos guardados.
@@ -154,12 +195,13 @@ def admin_contactos():
                 "apellidos": datos[1],
                 "email": datos[2],
                 "telefono": datos[3],
-                "ciudad": datos[4]
+                "ciudad": datos[4],
             }
             # Agregar el contacto a la lista de contactos.
             contactos.append(contacto)
 
     return render_template("admin/contactos.html", contactos=contactos)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post" action="{{ url_for('nueva_galleta') }}" class="row g-3 needs-validation py-3" enctype="multipart/form-data" novalidate>
+    <div class="col-md-6">
+        <label for="validationCustom01" class="form-label">Nombre de la Galleta:</label>
+        <input name="nombre" type="text" class="form-control" id="validationCustom01" required>
+        <div class="invalid-feedback">
+            Debes proporcionar un nombre de galleta.
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="validationCustom02" class="form-label">Precio por unidad:</label>
+        <input name="precio" type="number" class="form-control" id="validationCustom02" required>
+        <div class="invalid-feedback">
+            Debes proporcionar un precio.
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="input-group">
+            <span class="input-group-text">Descripción:</span>
+            <textarea name="descripcion" class="form-control" aria-label="With textarea" id="validationCustom03" required></textarea>
+            <div class="invalid-feedback">
+                Por favor escribe tu descipción.
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="input-group mb-3">
+            <input name="imagen" type="file" class="form-control" id="inputGroupFile02">
+            <label class="input-group-text" for="inputGroupFile02">Subir archivo</label>
+        </div>
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Enviar</button>
+    </div>
+</form>
+
+{% endblock %}

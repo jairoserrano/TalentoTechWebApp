@@ -102,3 +102,5 @@ Juan,Perez,juan@perez.com,23453245634,CartagoJuan,Perez,jpere@utb.edu.co,3003345
 Juana,De Arco,jdearco@utb.edu.co,3003074187,Cartagena
 Juan Camilo,Perez,juan@perez.com,342342342,Cartagena
 Juan Camilo,Perez Gonzalez,juan@perez.com,897263578238,Cartagena
+Juan Manuel,Gomez,jmgomez@utb.edu.co,231472398431,Cartagena
+Juan Manuel,Gomez,jmgomez@utb.edu.co,231472398431,Cartagena
