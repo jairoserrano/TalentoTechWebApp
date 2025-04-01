@@ -4,6 +4,7 @@ from config import Config
 from models import db, Contacto, Usuario, Galleta
 from flask import render_template, request, redirect, url_for
 import json
+import pandas as pd
 
 app = Flask(__name__)
 app.secret_key = "sdhjaskdhlasd%#&%tchajksfhjkS"
@@ -22,7 +23,7 @@ def login():
         user = request.form.get("user")
         password = request.form.get("password")
         usuario = Usuario.query.filter_by(user=user).first()
-        #return usuario.get_password("admin")
+        # return usuario.get_password("admin")
         if usuario is not None and usuario.validar_password(password):
             session["user"] = user
             if usuario.admin:
@@ -47,6 +48,7 @@ def galletas():
     galletas = Galleta.query.all()
     return render_template("galletas.html", galletas=galletas)
 
+
 @app.route("/galletas/nueva", methods=["GET", "POST"])
 def nueva_galleta():
     if request.method == "POST":
@@ -61,12 +63,13 @@ def nueva_galleta():
         )
         db.session.add(galleta)
         db.session.commit()
-        
+
         request.files["imagen"].save(f"static/img/galletas/{galleta.id}.webp")
-        
+
         return redirect(url_for("galletas"))
-    
+
     return render_template("admin/nueva_galleta.html")
+
 
 @app.route("/galletas/<int:id>")
 def galleta(id):
@@ -83,6 +86,8 @@ def contacto():
 """
 Recepción de contactos para venta de productos.
 """
+
+
 @app.route("/contacto", methods=["POST"])
 def guardar_contacto():
     nombre = request.form.get("nombre")
@@ -128,6 +133,21 @@ def perfil():
         db.session.commit()
         return redirect(url_for("index"))
     return render_template("perfil.html")
+
+
+@app.route("/contactos/limpiar")
+def pandas_contactos():
+    datos = pd.read_csv('database/contactos.txt', sep=",", dtype={
+        "Nombre": "string",
+        "Apellido": "string",
+        "Correo": "string",
+        "Telefono": "string",
+        "Ciudad": "string"
+    })
+    datos = datos.drop_duplicates(subset="Correo", keep="first")
+    datos = datos.drop_duplicates(subset="Telefono", keep="first")
+    datos.to_csv('database/contactos_limpio.txt', sep=",", index=False)
+    return "limpieza del dataset realizada correctamente"
 
 
 @app.route("/database/contactos")
@@ -181,6 +201,8 @@ def eliminar_contacto(id):
 """
 Ruta para mostrar los contactos guardados.
 """
+
+
 @app.route("/admin/contactos")
 def admin_contactos():
     contactos = []
