@@ -34,14 +34,14 @@
             <a class="nav-link active" aria-current="page" href="/">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/galletas">Mis Galletas</a>
+            <a class="nav-link" id="galletas" href="#">Mis Galletas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/contacto">Contacto</a>
           </li>
           {% if session['user'] %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('perfil') }}">Perfil</a>
+            <a class="nav-link" id="perfil" href="#">Perfil</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/logout">Cerrar Sesión</a>

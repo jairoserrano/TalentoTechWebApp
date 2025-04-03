@@ -1,27 +1,22 @@
-{% extends 'base.html' %}
+<h3>Nuestro surtido de galletas.</h3>
+{% if session["admin"] %}
+<a href="{{ url_for('nueva_galleta')}}" class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover">Nueva Galleta</a>
+{% endif %}
 
-{% block content %}
+{% if galletas|length == 0 %}
+<p>No hay galletas en el inventario.</p>
+{% endif %}
 
-      <h3>Nuestro surtido de galletas.</h3>
-      {% if session["admin"] %}
-      <a href="{{ url_for('nueva_galleta')}}" class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover">Nueva Galleta</a>
-      {% endif %}
-
-      {% if galletas|length == 0 %}
-      <p>No hay galletas en el inventario.</p>
-      {% endif %}
-
-      <div class="row row-cols-1 row-cols-md-3 g-4">
-        {% for galleta in galletas %}
-        <div class="col">
-          <div class="card h-100">
-            <img src="{{ url_for('static', filename='img/galletas/' + galleta.get_nombre_archivo()) }}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title"><a class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover" href="/galletas/{{galleta.id}}">{{ galleta.nombre }}</a></h5>
-              <p class="card-text">{{ galleta.descripcion }}</p>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for galleta in galletas %}
+  <div class="col">
+    <div class="card h-100">
+      <img src="{{ url_for('static', filename='img/galletas/' + galleta.get_nombre_archivo()) }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><a class="link-primary link-offset-2 link-underline-opacity-0 link-underline-opacity-0-hover" href="/galletas/{{galleta.id}}">{{ galleta.nombre }}</a></h5>
+        <p class="card-text">{{ galleta.descripcion }}</p>
       </div>
-{% endblock %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
