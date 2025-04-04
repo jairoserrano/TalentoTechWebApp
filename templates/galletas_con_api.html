@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="row row-cols-1 row-cols-md-3 g-4" id="galletas">
+<div class="row row-cols-1 row-cols-md-3 g-4" id="contenedor-galletas">
 </div>
 
 <script>
@@ -12,7 +12,7 @@
       .then((response) => response.json())
       .then((data) => {
         
-        document.getElementById("galletas").innerHTML = "";
+        document.getElementById("contenedor-galletas").innerHTML = "";
 
         const galletas = Array.isArray(data) ? data : data.galletas || [];
         galletas.forEach((galleta) => {
@@ -32,7 +32,7 @@
           `;
 
           col.appendChild(card);
-          document.getElementById("galletas").appendChild(col);
+          document.getElementById("contenedor-galletas").appendChild(col);
 
         });
 
