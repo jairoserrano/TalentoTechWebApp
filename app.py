@@ -233,7 +233,7 @@ def api_galletas():
     '''
     Endpoint para obtener todas las galletas.
     '''
-    galletas = Galleta.query.paginate(per_page=2, page=request.args.get("page", 1, type=int))
+    galletas = Galleta.query.paginate(per_page=10, page=request.args.get("page", 1, type=int))
     return jsonify([galleta.to_dict() for galleta in galletas])
 
 
