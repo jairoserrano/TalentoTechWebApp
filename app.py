@@ -1,8 +1,9 @@
 from flask import Flask
-from flask import session, jsonify
+from flask import session, jsonify, send_file
 from config import Config
 from models import db, Contacto, Usuario, Galleta
 from flask import render_template, request, redirect, url_for
+from io import BytesIO
 import json
 import pandas as pd
 
@@ -43,10 +44,34 @@ def logout():
     return redirect(url_for("index"))
 
 
+@app.route("/galletas/xls")
+def xls_galletas():
+
+    galletas = Galleta.query.all()
+    datos = [galleta.to_dict() for galleta in galletas]
+    df = pd.DataFrame(datos)
+
+    output = BytesIO()
+    with pd.ExcelWriter(output, engine="openpyxl") as writer:
+        df.to_excel(writer, index=False)
+    output.seek(0)
+
+    return send_file(
+        output,
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        as_attachment=True,
+        download_name="galletas.xlsx")
+
+
 @app.route("/galletas")
 def galletas():
     galletas = Galleta.query.all()
     return render_template("galletas.html", galletas=galletas)
+
+
+@app.route("/galletas_con_api")
+def galletas_con_api():
+    return render_template("galletas_con_api.html")
 
 
 @app.route("/galletas/nueva", methods=["GET", "POST"])
