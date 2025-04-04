@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import session
+from flask import session, jsonify
 from config import Config
 from models import db, Contacto, Usuario, Galleta
 from flask import render_template, request, redirect, url_for
@@ -223,6 +223,80 @@ def admin_contactos():
             contactos.append(contacto)
 
     return render_template("admin/contactos.html", contactos=contactos)
+
+
+'''
+Rutas para APIs REST.
+'''
+@app.route("/api/galletas")
+def api_galletas():
+    '''
+    Endpoint para obtener todas las galletas.
+    '''
+    galletas = Galleta.query.paginate(per_page=2, page=request.args.get("page", 1, type=int))
+    return jsonify([galleta.to_dict() for galleta in galletas])
+
+
+@app.route("/api/galletas/<int:id>")
+def api_galleta(id):
+    ''''
+    Endpoint para obtener una galleta por su id.'
+    '''
+    galleta = Galleta.query.get(id)
+    if galleta:
+        return jsonify(galleta.to_dict())
+    else:
+        return jsonify({"error": "Galleta no encontrada"}), 404
+
+@app.route("/api/galletas/<int:id>", methods=["DELETE"])
+def api_delete_galleta(id):
+    '''
+    Endpoint para eliminar una galleta por su id.
+    '''
+    galleta = Galleta.query.get(id)
+    if galleta:
+        db.session.delete(galleta)
+        db.session.commit()
+        return jsonify({"message": "Galleta eliminada"}), 200
+    else:
+        return jsonify({"error": "Galleta no encontrada"}), 404
+
+@app.route("/api/galletas", methods=["POST"])
+def api_create_galleta():
+    '''
+    Endpoint para crear una galleta.
+    '''
+    data = request.get_json()
+    galleta = Galleta(
+        nombre=data["nombre"],
+        precio=data["precio"],
+        descripcion=data["descripcion"],
+    )
+    db.session.add(galleta)
+    db.session.commit()
+    return jsonify(galleta.to_dict()), 201
+
+@app.route("/api/galletas/<int:id>", methods=["PUT"])
+def api_update_galleta(id):
+    '''
+    Endpoint para actualizar una galleta por su id.
+    '''
+    data = request.get_json()
+    galleta = Galleta.query.get(id)
+    if galleta:
+        galleta.nombre = data["nombre"]
+        galleta.precio = data["precio"]
+        galleta.descripcion = data["descripcion"]
+        db.session.commit()
+        return jsonify(galleta.to_dict()), 200
+    else:
+        return jsonify({"error": "Galleta no encontrada"}), 404
+
+
+@app.route("/api/contactos")
+def api_contactos():
+    contactos = Contacto.query.all()
+    return jsonify([contacto.to_dict() for contacto in contactos])
 
 
 if __name__ == "__main__":

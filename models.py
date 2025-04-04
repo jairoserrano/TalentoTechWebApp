@@ -13,6 +13,16 @@ class Contacto(db.Model):
     ciudad = db.Column(db.String(100), nullable=False)
     borrado = db.Column(db.Boolean, default=False)
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "apellidos": self.apellidos,
+            "email": self.email,
+            "telefono": self.telefono,
+            "ciudad": self.ciudad
+        }
+
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user = db.Column(db.String(50), nullable=False)
@@ -37,3 +47,11 @@ class Galleta(db.Model):
 
     def get_nombre_archivo(self):
         return f"{self.id}.webp"
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "precio": self.precio,
+            "descripcion": self.descripcion
+        }
